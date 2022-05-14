@@ -1,6 +1,6 @@
 body {
     font-family: sans-serif;
-    background-color: #ffffff;
+    background-color: #F8F8FF;
 }
 
 .file-upload {
@@ -9,7 +9,6 @@ body {
     padding: 10% 10%;
     border-radius: 10px;
     border: solid 1.5ox #f6f7fa;
-    background-color: #f6f7fa;
 }
 
 .file-upload-btn {
@@ -25,18 +24,6 @@ body {
     outline: none;
     text-transform: uppercase;
     font-weight: 700;
-}
-
-.file-upload-btn:hover {
-    background: #1aa059;
-    color: #ffffff;
-    transition: all 0.2s ease;
-    cursor: pointer;
-}
-
-.file-upload-btn:active {
-    border: 0;
-    transition: all 0.2s ease;
 }
 
 .file-upload-content {
@@ -68,8 +55,8 @@ body {
 
 .image-dropping,
 .image-upload-wrap:hover {
-    background-color: #35465d;
-    border: 1.5px dashed #ffffff;
+    background-color: #E6E1E5;
+    border: 1.5px dashed #E6E1E5;
 }
 
 .image-title-wrap {

@@ -76,7 +76,13 @@
             <div class="file-upload-content">
                 <img class="file-upload-image" id="face-image" src="#" alt="your image" />
                 <p class="result-message"></p>
-                <div id="label-container"></div>
+
+                <!--   현재 고쳐야할 부분.-->
+
+                <div id="label-container" class="d-flex flex-column justify-content-around"></div>
+
+                <!--   현재 고쳐야할 부분.-->
+
                 <div class="image-title-wrap">
                     <button type="button" onclick="removeUpload()" class="remove-image">
                         다른 이미지 올리기 <span class="image-title"></span>
@@ -106,8 +112,8 @@
                     };
 
                     reader.readAsDataURL(input.files[0]);
-                    init().then(function() {
-                        console.log("hello");
+                    init().then(function () {
+                        console.log('hello');
                         predict();
                     });
                 } else {
@@ -145,7 +151,9 @@
                 maxPredictions = model.getTotalClasses();
                 labelContainer = document.getElementById('label-container');
                 for (let i = 0; i < maxPredictions; i++) {
-                    labelContainer.appendChild(document.createElement('div'));
+                    var element = document.createElement('div');
+                    element.classList.add('d-flex');
+                    labelContainer.appendChild(element);
                 }
             }
 
@@ -156,36 +164,63 @@
                 const prediction = await model.predict(image, false);
                 // 큰 순서대로 나오도록 정렬하는 코드
                 prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
-                var resultMessage;
-                switch (prediction[0].className) {
-                    case 'dog':
-                        resultMessage = "강아지상"
-                        break;
-                    case 'cat':
-                        resultMessage = "고양이상"
-                        break;
-                    case 'bear':
-                        resultMessage = "곰상"
-                        break;
-                    case 'deer':
-                        resultMessage = "사슴상"
-                        break;
-                    case 'dinosaur':
-                        resultMessage = "공룡상"
-                        break;
-                    case 'fox':
-                        resultMessage = "여우상"
-                        break;
-                    default:
-                        resultMessage = "사람이 아님(넝~담~)"
-                }
-                // jQuery 문법을 사용하여, html 안쪽에 변수를 넣어 가장 닮은 동물의 메시지를 띄워줌
-                $('.result-message').html(resultMessage);
-                // 아래줄은 문제없음. init() 함수 문제 or css 잘못 건들인듯..
+
+                //                 이 밑에 주석은 위에 어떤건지 설명해주는 코드. 이건 나중에 수정
+                //     // 앞부터, resultTitle(어떤상인지), resultExplain(어떤 스타일인지), resultCeleb(누구랑 닮았는지)를 띄워줌.
+                //     var resultTitle, resultExplain, resultCeleb;
+
+                //      var title = "<div class='" + prediction[0].className + "-animal-title'>" + resultTitle + "</div>"
+                // var explain = "<div class='animal-explain pt-2'>" + resultExplain + "</div>"
+                // var celeb = "<div class='" + prediction[0].className + "-animal-celeb pt-2 pb-2'>" + resultCeleb + "</div>"
+                // $('.result-message').html(title + explain + celeb);
+
+                var barWidth;
                 for (let i = 0; i < maxPredictions; i++) {
-                    const classPrediction =
-                        prediction[i].className + ': ' + prediction[i].probability.toFixed(2);
-                    labelContainer.childNodes[i].innerHTML = classPrediction;
+                    if (prediction[i].probability.toFixed(2) > 0.1) {
+                        barWidth = Math.round(prediction[i].probability.toFixed(2) * 100) + '%';
+                    } else if (prediction[i].probability.toFixed(2) >= 0.01) {
+                        barWidth = '4%';
+                    } else {
+                        barWidth = '2%';
+                    }
+                    var labelTitle;
+                    switch (prediction[i].className) {
+                        case 'cat':
+                            labelTitle = '고양이상';
+                            break;
+                        case 'bear':
+                            labelTitle = '곰상';
+                            break;
+                        case "dog":
+                            labelTitle = '강아지상';
+                            break;
+                        case 'dinosaur':
+                            labelTitle = '공룡상';
+                            break;
+                        case 'deer':
+                            labelTitle = '사슴상';
+                            break;
+                        case 'fox':
+                            labelTitle = '여우상';
+                            break;
+                        default:
+                            labelTitle = "알수없음";
+                    }
+                    var label =
+                        "<div class='animal-label d-flex align-items-center'>" +
+                        labelTitle +
+                        '</div>';
+                    var bar =
+                        "<div class='bar-container position-relative container'><div class='" +
+                        prediction[i].className +
+                        "-box'></div><div class='d-flex justify-content-center align-items-center " +
+                        prediction[i].className +
+                        "-bar' style='width: " +
+                        barWidth +
+                        "'><span class='d-block percent-text'>" +
+                        Math.round(prediction[i].probability.toFixed(2) * 100) +
+                        '%</span></div></div>';
+                    labelContainer.childNodes[i].innerHTML = label + bar;
                 }
             }
         </script>

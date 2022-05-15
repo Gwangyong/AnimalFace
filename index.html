@@ -138,7 +138,7 @@
             // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
 
             // MARK : 데이터셋 완성한걸 Cloud에 올리고 Cloud 주소로 가져와서 사용함
-            const URL = 'https://teachablemachine.withgoogle.com/models/a4XNhO4w1/';
+            const URL = 'https://teachablemachine.withgoogle.com/models/gI64PbiKL/';
 
             let model, webcam, labelContainer, maxPredictions;
 
@@ -165,17 +165,11 @@
                 // 큰 순서대로 나오도록 정렬하는 코드
                 prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
 
-                //                 이 밑에 주석은 위에 어떤건지 설명해주는 코드. 이건 나중에 수정
-                //     // 앞부터, resultTitle(어떤상인지), resultExplain(어떤 스타일인지), resultCeleb(누구랑 닮았는지)를 띄워줌.
-                //     var resultTitle, resultExplain, resultCeleb;
 
-                //      var title = "<div class='" + prediction[0].className + "-animal-title'>" + resultTitle + "</div>"
-                // var explain = "<div class='animal-explain pt-2'>" + resultExplain + "</div>"
-                // var celeb = "<div class='" + prediction[0].className + "-animal-celeb pt-2 pb-2'>" + resultCeleb + "</div>"
-                // $('.result-message').html(title + explain + celeb);
 
                 var barWidth;
                 for (let i = 0; i < maxPredictions; i++) {
+                    console.log(prediction[i].className)
                     if (prediction[i].probability.toFixed(2) > 0.1) {
                         barWidth = Math.round(prediction[i].probability.toFixed(2) * 100) + '%';
                     } else if (prediction[i].probability.toFixed(2) >= 0.01) {
@@ -183,6 +177,8 @@
                     } else {
                         barWidth = '2%';
                     }
+
+                    
                     var labelTitle;
                     switch (prediction[i].className) {
                         case 'cat':

@@ -31,16 +31,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">blank</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">blank</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled">blank</a>
+                            <a class="nav-link active" aria-current="page" href="https://github.com/Gwangyong/AnimalFace">GitHub</a>
                         </li>
                     </ul>
                 </div>
@@ -114,7 +105,7 @@
                     reader.readAsDataURL(input.files[0]);
                     init().then(function () {
                         console.log('hello');
-                        predict();
+                        predict(); 
                         // loading이 멈춰야하는데 왜..?
                         $('#loading-spinner').hide();
                     });
@@ -137,7 +128,7 @@
         </script>
         <script type="text/javascript">
             // MARK : 데이터셋 완성한걸 Cloud에 올리고 Cloud 주소로 가져와서 사용함
-            const URL = 'https://teachablemachine.withgoogle.com/models/gI64PbiKL/';
+            const URL = 'https://teachablemachine.withgoogle.com/models/0uA9EFTNX/';
 
             let model, webcam, labelContainer, maxPredictions;
             async function init() {
@@ -196,10 +187,6 @@
                             '넌 곰상이다 넌 곰상이다 넌 곰상이다.';
                         resultCeleb = '곰상 연예인: 마동석, 조진웅, 조세호, 안재홍';
                         break;
-                    case 'fox':
-                        resultTitle = '눈을 뺏기는 여우상';
-                        resultExplain = '넌 여우다 넌 여우다 넌 여우다'
-                        resultCeleb = '여우상 연예인 : 이준기, 박시후, 서인국, 블락비 지코, 엠블랙 이준, 샤이니 키'
                     default:
                         resultTitle = '몰?루';
                         resultExplain = '몰?루 상입니다.';
